@@ -1,0 +1,88 @@
+# Change state.
+# Step status: not_run | running | done | skipped.
+# Each step has: status, version (0 = none), file, stale.
+# stale is true when an earlier finding that the step relies on no longer holds.
+# Stage status: not_run | running | done.
+# The steps are in the recommended order. The user may run them in any order.
+# The report is one living file. It stays `running` until it is finalized.
+slug: <slug>
+description: <description>
+created: <date>
+stages:
+  1:
+    name: Project justification and benefit
+    status: not_run
+    steps:
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+  2:
+    name: Existing solutions and differentiation
+    status: not_run
+    steps:
+      research:  { status: not_run, version: 0, file: null, stale: false }
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      wardley:   { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+  3:
+    name: Scope and success criteria
+    status: not_run
+    steps:
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+  4:
+    name: Knowledge, resources, and constraints
+    status: not_run
+    steps:
+      wardley:   { status: not_run, version: 0, file: null, stale: false }
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+  5:
+    name: Roadmap and feasibility
+    status: not_run
+    steps:
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      wardley:   { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+  6:
+    name: Requirements definition
+    status: not_run
+    steps:
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+  7:
+    name: Holistic review and completion of documentation
+    status: not_run
+    steps:
+      mece:      { status: not_run, version: 0, file: null, stale: false }
+      wardley:   { status: not_run, version: 0, file: null, stale: false }
+      red_team:  { status: not_run, version: 0, file: null, stale: false }
+      premortem: { status: not_run, version: 0, file: null, stale: false }
+      ishikawa:  { status: not_run, version: 0, file: null, stale: false }
+      fmea:      { status: not_run, version: 0, file: null, stale: false }
+      de_bono:   { status: not_run, version: 0, file: null, stale: false }
+documents:
+  prd:  { status: not_run, version: 0, file: null, stale: false }
+  adr:  { status: not_run, version: 0, file: null, stale: false }
+  spec: { status: not_run, version: 0, file: null, stale: false }
+report: { status: running, file: REPORT.md }
