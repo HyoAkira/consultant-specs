@@ -94,4 +94,7 @@ directory of your agent.
 
 ## License
 
-Licensed under the GNU General Public License v3.0. See `LICENSE`.
+MIT. See `LICENSE`.
+
+The skills are plain Markdown with no runtime and no dependencies, so MIT
+keeps them usable inside proprietary codebases. Contributions welcome.
