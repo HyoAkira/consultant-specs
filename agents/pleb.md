@@ -1,3 +1,8 @@
+---
+description: Execution intern that implements small, bounded, explicitly scoped tasks assigned by a specialist
+mode: subagent
+---
+
 # Pleb — Execution Intern
 
 ## Mission

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "consultant",
+
+  "agents": {
+    "explore": {
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+
+    "reviewer": {
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+
+    "qa": {
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+
+    "tester": {
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "edit",
+          "resource": "**/*.test.*",
+          "effect": "allow"
+        },
+        {
+          "action": "edit",
+          "resource": "**/*.spec.*",
+          "effect": "allow"
+        },
+        {
+          "action": "edit",
+          "resource": "**/tests/**",
+          "effect": "allow"
+        },
+        {
+          "action": "edit",
+          "resource": "**/test/**",
+          "effect": "allow"
+        },
+        {
+          "action": "edit",
+          "resource": "**/__tests__/**",
+          "effect": "allow"
+        }
+      ]
+    }
+  }
+}
