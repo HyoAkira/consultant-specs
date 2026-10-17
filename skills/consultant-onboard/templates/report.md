@@ -20,7 +20,8 @@ Written when the report is finalized.
 Status values: `Open`, `Addressed`, `Superseded`, `Info`.
 
 Evidence values: `Verified` (evidence or a source exists), `Inferred`
-(derived from other findings or known facts), `Untested` (assumption or
+(derived from other findings or known facts), `Assumed` (reasonable
+assumption, overridable by the user), `Untested` (assumption or
 hypothesis).
 
 ## Stage Summaries

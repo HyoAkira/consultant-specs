@@ -1,10 +1,14 @@
 # Change state.
 # Step status: not_run | running | done | skipped.
-# Each step has: status, version (0 = none), file, stale.
+# Each step has: status, version (run counter, 0 = none), file (current file), stale.
+# version is metadata only; it does not affect the filename.
 # stale is true when an earlier finding that the step relies on no longer holds.
 # Stage status: not_run | running | done.
 # The steps are in the recommended order. The user may run them in any order.
 # The report is one living file. It stays `running` until it is finalized.
+# Files are updated in-place by default: MECE-S1.md, ISHIKAWA-S1.md, etc.
+# A version-suffixed file (MECE-S1-v2.md) is only created when content changes
+# significantly or the user explicitly requests it.
 slug: <slug>
 description: <description>
 created: <date>

@@ -32,6 +32,17 @@ A change runs through seven stages. `consultant-onboard` tracks the stage
 state, shows the current stage, recommends the next step, and closes each
 stage.
 
+**Silent mode (default):** When a task is clear enough to proceed, onboard
+runs the recommended step automatically without asking. It only stops at
+blocking decision points — conflicts, stale work, or when the user needs to
+decide. To switch to interactive mode, tell the agent to ask you before
+running a step.
+
+**In-place updates (default):** Tool outputs and documents are updated in
+place. A `-v<n>.md` version file is created only when the content changes
+significantly or you explicitly request a version snapshot. The version
+number is metadata in `change.yaml`, not part of the filename.
+
 1. Project justification and benefit
 2. Existing solutions and differentiation (starts with research)
 3. Scope and success criteria
@@ -40,24 +51,28 @@ stage.
 6. Requirements definition
 7. Holistic review and completion of documentation
 
-Each stage has steps in a recommended order. The user may run any step of
-any stage in any order, or skip a step. Each tool has its own focus for each
+Each stage has steps in a recommended order. You may run any step of any
+stage in any order, or skip a step. Each tool has its own focus for each
 stage. State is kept per stage and step in `change.yaml`.
 
 ## The cumulative report
 
 Each change has one living report, `REPORT.md`.
 
-- Every tool and document reads it before it asks the user anything.
-- Every finding gets an ID (`MECE-01`, `ISH-01`, `DEB-01`, `RED-01`,
-  `WAR-01`, `PRE-01`, `FMEA-01`). Tools cite IDs. They do not repeat findings.
+- Every tool and document reads it first and updates it after. The report
+  protocol is defined once in `consultant-onboard/SKILL.md` and referenced by
+  all seven analysis tools — no duplication.
+- Every finding gets an ID (`MECE-01`, `ISH-01`, ...). Tools cite IDs. They
+  do not repeat findings.
 - Every tool runs a consistency check against the report. It records
   conflicts, open items, and gaps in the report.
-- Every finding has an Evidence value: `Verified`, `Inferred`, or `Untested`.
+- Every finding has an Evidence value: `Verified`, `Inferred`, or
+  `Untested`. Tools may also use `Assumed` for reasonable assumptions.
 - When a conflict shows that an earlier finding no longer holds, the tool
-  marks the tool and documents that depend on it as `stale`. Onboard
-  recommends to run them again first. Archive warns about stale work.
-- `consultant-report` finalizes the report when each of the seven tools has been run.
+  marks the dependent tool and documents as `stale`. Onboard recommends to
+  run them again first. Archive warns about stale work.
+- `consultant-report` finalizes the report when each of the seven tools has
+  been run.
 
 ## Output layout
 
@@ -68,10 +83,13 @@ ProjectDocs/
   changes/<slug>/
     change.yaml
     REPORT.md
-    MECE-S1-v1.md ... FMEA-S7-v1.md
-    PRD-v1.md, ADR-v1.md, SPEC-v1.md
+    MECE-S1.md ... FMEA-S7.md
+    PRD.md, ADR.md, SPEC.md
   archive/YYYY-MM-DD-<slug>/
 ```
+
+Files are updated in place by default. A `-v<n>.md` file appears only when a
+version snapshot is explicitly created.
 
 ## Install
 

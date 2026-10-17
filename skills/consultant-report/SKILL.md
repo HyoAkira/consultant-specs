@@ -21,8 +21,8 @@ finalizes the report. It does not repeat findings.
    `status: done`, in any stage. If a tool has none, stop and list those
    tools. Do not change the report.
 3. If `report.status` is `done`, ask the user whether to finalize again.
-4. Read `REPORT.md`. Read the PRD, ADR, and SPEC files named in
-   `change.yaml`, if they exist.
+4. Read `REPORT.md` (cached from onboarding if available). Read the PRD, ADR,
+   and SPEC files named in `change.yaml`, if they exist.
 5. List each finding with the status `Open` and each Consistency Note
    without a decision. Tell the user. Ask for a decision for each one. Write
    the decision in the note, or in Open Issues.
@@ -36,8 +36,8 @@ finalizes the report. It does not repeat findings.
      Consistency Note, and each question that stays open in the documents.
      Cite IDs.
 7. Set `Status: Final` in the report header. Update the `Updated` date.
-8. Read the file back. Confirm the sections exist.
-9. Set `report` to `done` in `change.yaml`.
-10. Show a short summary. Name the next step: `consultant-archive`. Stop.
+8. Set `report` to `done` in `change.yaml`.
+9. Show a short summary. Name the next step: `consultant-archive`. In silent
+   mode, offer to run it automatically.
 
 If a write fails, set `report` back to `running` and report the error.

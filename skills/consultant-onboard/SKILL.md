@@ -19,13 +19,25 @@ archive skill.
 
 - Write all documents in English.
 - Do not edit project code. This framework writes documents only.
-- Ask before you overwrite any file.
-- Stop after each output file. Show what you wrote. Wait for the user.
-- Use the user's own words for their project. Do not invent facts.
-- Every tool and every document reads `REPORT.md` first and updates it
-  after. See the report protocol in each skill.
+- Ask before you overwrite any file that already exists with different content.
+- **Silent mode (default):** When a task is clear enough to proceed, do it
+  without stopping. Mark reasonable assumptions as `Assumed` or `Inferred`
+  in the finding's Evidence column. Only interrupt the user at blocking
+  decision points (conflicts, stale work that needs re-running, or when
+  findings contradict each other).
+- **In-place updates (default):** Small edits update the existing document
+  in place. A new `-v<n>.md` file is created only when the content changes
+  significantly or the user explicitly requests a version snapshot. The
+  version number is metadata in `change.yaml`, not part of the filename.
+- Every tool and document reads `REPORT.md` first and updates it after.
+  See the **Shared Report Protocol** below. When onboarding calls a tool,
+  it keeps `change.yaml` and `REPORT.md` in context so the tool can read
+  them once instead of re-reading every time.
 - The stage order is a recommendation. The user may run any step of any
   stage, in any order. Accept the choice. Do not block it.
+- Do not stop after every file. Continue to the next recommended step in
+  silent mode. Only present a summary and wait when the user needs to
+  decide, or when a stage is ready to close.
 
 ## Step 1: Check the project root
 
@@ -54,8 +66,8 @@ archive skill.
 ## Step 3a: New change
 
 1. Ask for a short description of the change.
-2. Suggest a kebab-case slug from the description. Ask the user to confirm
-   or change it.
+2. Suggest a kebab-case slug from the description. Use the slug directly;
+   do not ask for confirmation unless the user edits the suggestion.
 3. Check that `ProjectDocs/changes/<slug>/` does not exist. If it exists,
    stop and ask the user to choose another slug or continue that change.
 4. Get today's date with `date +%Y-%m-%d`.
@@ -68,7 +80,8 @@ archive skill.
 
 ## Step 3b: Continue a change
 
-1. Read `ProjectDocs/changes/<slug>/change.yaml` and `REPORT.md`.
+1. Read `ProjectDocs/changes/<slug>/change.yaml` and `REPORT.md`. Keep both
+   in context for the duration of this session.
 2. If any step or document has `status: running`, the last run did not
    finish. Ask the user:
    - `Reset and run again` sets the status to `not_run`.
@@ -95,8 +108,8 @@ Use this loop for the whole change.
 3. Recommend the next step. Choose in this order:
    1. A step with `stale: true`
    2. The first step with `status: not_run`, in the recommended order
-4. Ask the user which step to run. The user may choose the recommended
-   step, any other step of any stage, or skip a step.
+4. In silent mode (default), run the recommended step automatically.
+   Otherwise, ask the user which step to run. The user may choose any step.
    - To skip a step, set its status to `skipped`. Write `Skipped: <reason>`
      on its line in Stage Summaries. The user may run a skipped step later.
    - The user does not need to run every step in every stage. Important
@@ -105,9 +118,11 @@ Use this loop for the whole change.
 5. Run the chosen step:
    - If the stage status is `not_run`, set it to `running`.
    - Tool: follow the `SKILL.md` of the tool. Give it the slug and the stage.
+     The slug and REPORT.md are already in context.
    - Research: follow "Research step" below.
-6. After the step, show the updated stage card. Name the next recommended
-   step. Stop and wait for the user.
+6. After the step, in silent mode continue to the next recommended step.
+   Otherwise, show the updated stage card, name the next recommended step,
+   and stop.
 7. When every step of the stage is `done` or `skipped`, close the stage:
    1. For Stage 2 only: show the findings of the stage grouped by Evidence
       value. Ask the user to confirm or change the values. Update the
@@ -131,10 +146,11 @@ skill. Use the web search and web fetch tools of the agent. There is no
 separate file. The findings go into `REPORT.md`.
 
 1. Set `stages.2.steps.research.status` to `running`. Leave the version.
-2. Read `REPORT.md`. Use its findings as known facts.
+2. REPORT.md is already in context from onboarding. Use its findings as
+   known facts.
 3. Search for similar products, alternatives, user needs, user complaints,
-   and the known gaps of existing solutions. Ask the user which references
-   they already know.
+   and the known gaps of existing solutions. In silent mode, assume the user
+   knows the domain and skip asking about known references.
 4. Give each finding an ID with the prefix `RES-` and the next free number.
 5. Set the Evidence value of each finding. Use `Verified` only when a source
    supports it. Write the source URL in the Note column. Use `Inferred` or
@@ -196,11 +212,80 @@ Evidence review in Step 4 does this.
 ## Consistency check
 
 The holistic review is not only Stage 7. Every tool does it as part of its
-own run in every stage. Each tool reads `REPORT.md` first. It checks its new
-findings against the Findings Register. It records conflicts, open items, and
-gaps in Consistency Notes.
+own run in every stage. Each tool reads `REPORT.md` first (or uses the
+version already in context from onboarding). It checks its new findings
+against the Findings Register. It records conflicts, open items, and gaps
+in Consistency Notes.
+
+## Shared Report Protocol
+
+All seven analysis tools follow this protocol. It is defined once here so
+that each tool's SKILL.md can reference it without duplicating the text.
+
+The report is `ProjectDocs/changes/<slug>/REPORT.md`. It holds all findings
+of the change. Do not write the same finding twice.
+
+Finding prefix of this tool: set per the tool (MECE, ISH, DEB, RED, WAR,
+PRE, FMEA).
+
+### Before you ask the user any question
+
+1. Read `REPORT.md` (or use the version already in context from onboarding).
+2. Read the Findings Register. Use its findings as known facts.
+
+### After the analysis and before you write the tool file
+
+1. Give each new finding an ID. Use the tool's prefix and the next free
+   number in the register, for example `MECE-01`.
+2. Set the Evidence value of each new finding:
+   - `Verified`: the user gave evidence, or a source supports it.
+   - `Inferred`: you derived it from other findings or known facts.
+   - `Assumed`: you made a reasonable assumption that the user can override.
+   - `Untested`: it is an assumption or a hypothesis.
+   Do not mark a finding `Verified` on your own judgement.
+3. Run the consistency check:
+   - Conflict: a new finding contradicts a finding in the register.
+     Record both IDs.
+   - Open item: a finding from another tool relates to your topic and has
+     the status `Open`. Address it in this analysis, or state that you did
+     not.
+   - Gap: a topic that this tool normally covers is missing from the register.
+4. In silent mode, record reasonable assumptions and proceed. Only tell the
+   user about conflicts, open items, and gaps that require a decision.
+   Record the user's decision in the note.
+5. If the user decides that an earlier finding no longer holds, mark the
+   dependent work as stale. Set `stale: true` in `change.yaml` for the step
+   that wrote the earlier finding and for each document in the `Addressed in`
+   column of that finding. Do not run them again yourself.
+6. Cite earlier findings by ID. Do not copy their text.
+
+### After you write the tool file
+
+1. Add each new finding to the Findings Register in `REPORT.md`. Write its
+   Tool, Stage, and Evidence value.
+2. If the user confirmed a finding of another tool, or gave evidence for it,
+   during this run, update the Evidence value of that finding. Write the
+   source in the Note column.
+3. Replace your line in the summary of your stage in Stage Summaries with a
+   short summary. Cite IDs. Do not copy finding text.
+4. Add each conflict, open item, and gap to Consistency Notes. Write your
+   tool and stage. For a conflict that marked work as stale, write
+   `Marked stale: <items>` in the Note.
+5. If this is a re-run for the same stage, set each finding of the earlier
+   run that no longer applies to `Superseded`. Do not delete any row. Set
+   `stale: true` for each document in the `Addressed in` column of those
+   findings.
+6. Update the `Updated` date.
+7. Set your step to `done` in `change.yaml`. Update the `file` field to the
+   filename (in-place by default). Do not increment the version unless the
+   content changed significantly. Set `stale` to `false` for your step.
+8. If the report status is `done`, set it to `running`.
+
+If a write fails, set the status of your step back to `not_run` and report
+the error.
 
 ## Finish
 
 Show the status of the change: the current stage, the steps, the documents,
-and the report. Name the next recommended item. Stop.
+and the report. Name the next recommended item. In silent mode, continue to
+the next recommended step instead of stopping.

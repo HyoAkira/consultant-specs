@@ -23,8 +23,8 @@ change folder to the archive.
    Then list each step and document with `stale: true`. If there are any,
    tell the user what is stale and why (see Consistency Notes). Ask the user
    whether to continue. If the user says no, stop. Do not write any file.
-3. Read `ProjectDocs/project.md`, `SPEC-v<n>.md`, and `ADR-v<n>.md` for this
-   change. The SPEC file is required. The ADR file is used if it exists.
+3. Read `ProjectDocs/project.md`, `SPEC.md`, and `ADR.md` for this change.
+   The SPEC file is required. The ADR file is used if it exists.
 4. Build the new `project.md` in memory:
    - ADDED: append each requirement block and its scenarios.
    - MODIFIED: replace the matching requirement block with the new block.
@@ -38,8 +38,8 @@ change folder to the archive.
 5. If a MODIFIED or REMOVED name is not in the main requirements:
    1. List the other active changes in `ProjectDocs/changes/`, excluding
       this one.
-   2. Read the `SPEC-v<n>.md` file of each active change. Use the file named
-      in its `change.yaml`.
+   2. Read the `SPEC.md` file of each active change. Use the file named in
+      its `change.yaml`.
    3. Check whether the missing name is in an ADDED section of one of them.
       If it is, the requirement is not archived yet.
    4. Tell the user:

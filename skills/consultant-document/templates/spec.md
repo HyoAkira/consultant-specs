@@ -2,7 +2,7 @@
 
 - Change: <slug>
 - Version: v<n>
-- Related PRD: PRD-v<n>.md
+- Related PRD: PRD.md
 - Date: <date>
 
 This file is a delta. `consultant-archive` applies it to `project.md`.

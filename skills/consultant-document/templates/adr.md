@@ -4,7 +4,7 @@
 - Version: v<n>
 - Date: <date>
 - Deciders: <names>
-- Related PRD: PRD-v<n>.md
+- Related PRD: PRD.md
 
 One file can hold several decision records. Each record has its own ID.
 Take the next ID from the Decisions table in `project.md`.
