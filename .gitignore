@@ -1,0 +1,45 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Local tool state
+.openchamber/
+.opencode/
+
+# Large binaries / data
+*.gguf
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+models/
+data/
+
+# Runtime / caches
+.runtime/
+.cache/
